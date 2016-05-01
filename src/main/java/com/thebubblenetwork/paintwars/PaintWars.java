@@ -23,7 +23,7 @@ import java.util.logging.Level;
 
 public class PaintWars extends BubbleGameAPI {
 
-    public static final int VERSION = 1;
+    private static final int VERSION = 1;
 
     @Getter
     private static PaintWars instance;
