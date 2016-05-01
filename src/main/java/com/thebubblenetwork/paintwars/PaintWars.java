@@ -9,6 +9,8 @@ import com.thebubblenetwork.api.game.maps.MapData;
 import com.thebubblenetwork.api.global.bubblepackets.messaging.messages.handshake.JoinableUpdate;
 import com.thebubblenetwork.api.global.player.BubblePlayer;
 import com.thebubblenetwork.paintwars.kits.RifleKit;
+import com.thebubblenetwork.paintwars.listeners.PaintListener;
+import com.thebubblenetwork.paintwars.map.PaintWarsMap;
 import com.thebubblenetwork.paintwars.scoreboard.PaintWarsBoard;
 import lombok.Getter;
 import org.bukkit.ChatColor;
@@ -31,10 +33,14 @@ public class PaintWars extends BubbleGameAPI {
     @Getter
     private PaintWarsBoard board;
 
+    @Getter
+    private PaintListener listener = new PaintListener(this);
+
     public PaintWars() {
         super("PaintWars", GameMode.SURVIVAL, "Rifle", 2);
         instance = this;
         board = new PaintWarsBoard();
+        listener = new PaintListener(this);
     }
 
     public void cleanup() {
@@ -58,7 +64,7 @@ public class PaintWars extends BubbleGameAPI {
                 Player p = (Player)player.getPlayer();
                 p.sendMessage("");
                 p.sendMessage(ChatColor.GRAY + "                <----------------Stats---------------->");
-                p.sendMessage(ChatColor.GREEN + "Thank you for playing, stats for Paint Wars is coming soon.");
+                p.sendMessage(ChatColor.GREEN + "Thank you for playing, stats for PaintWars is coming soon.");
                 /*p.sendMessage(ChatColor.GREEN + "You have won " + ChatColor.GRAY + (int)player.getStats(getType().getName(), "win") + ChatColor.GREEN + " SkyFortress games");
                 p.sendMessage(ChatColor.GREEN + "You have killed " + ChatColor.GRAY + (int)player.getStats(getType().getName(), "kill") + ChatColor.GREEN + " players");
                 p.sendMessage(ChatColor.GREEN + "You have assassinated the king " + ChatColor.GRAY + (int)player.getStats(getType().getName(), "kingkill") + ChatColor.GREEN + " times");
@@ -80,11 +86,11 @@ public class PaintWars extends BubbleGameAPI {
     }
 
     public GameMap loadMap(String s, MapData mapData, File file, File file1) {
-
+        return new PaintWarsMap(s, mapData, file, file1);
     }
 
     public void teleportPlayers(GameMap gameMap, World world) {
-
+        
     }
 
     public long finishUp() {
@@ -94,6 +100,7 @@ public class PaintWars extends BubbleGameAPI {
     @Override
     public void onEnable() {
         super.onEnable();
+        registerListener(getListener());
         KitManager.getKits().add(new RifleKit());
     }
 

@@ -33,8 +33,18 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-public class PaintListener {
+public class PaintListener implements Listener {
 
-    
+    public static boolean BYPASS = false;
+
+    private PaintWars paintWars;
+    private Set<Cord> loaded = new HashSet<>();
+
+    public PaintListener(PaintWars paintWars) {
+        this.paintWars = paintWars;
+    }
+
+
+
 
 }
