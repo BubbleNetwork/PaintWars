@@ -33,7 +33,6 @@ public class PaintWars extends BubbleGameAPI {
     @Getter
     private PaintWarsBoard board;
 
-    @Getter
     private PaintListener listener = new PaintListener(this);
 
     public PaintWars() {
@@ -90,7 +89,7 @@ public class PaintWars extends BubbleGameAPI {
     }
 
     public void teleportPlayers(GameMap gameMap, World world) {
-        
+
     }
 
     public long finishUp() {
@@ -104,6 +103,10 @@ public class PaintWars extends BubbleGameAPI {
         KitManager.getKits().add(new RifleKit());
     }
 
+
+    public PaintListener getListener() {
+        return listener;
+    }
 
     public int getVersion() {
         return VERSION;

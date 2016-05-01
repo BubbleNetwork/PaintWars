@@ -17,7 +17,7 @@ public class PaintMap {
     private Player ifassigned;
 
     public PaintMap(Set<LocationObject> flags, LocationObject spawn) {
-        this.flags = flags
+        this.flags = flags;
         this.spawn = spawn;
     }
 
