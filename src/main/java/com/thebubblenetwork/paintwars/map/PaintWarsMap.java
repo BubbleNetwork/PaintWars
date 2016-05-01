@@ -25,10 +25,10 @@ public class PaintWarsMap extends GameMap {
         Map map = new HashMap<>();
 
         Set<Cord> cords = new HashSet<>();
-        List<PaintMap> paintMap = new ArrayList<>();
+        List<TeamsMapData> teams = new ArrayList<>();
 
-        for (String pwmap : configurationSection.getConfigurationSection("pwmaps").getKeys(false)) {
-            String section = "pwmaps." + pwmap;
+        for (String team : configurationSection.getConfigurationSection("teams").getKeys(false)) {
+            String section = "teams." + team;
             LocationObject spawn = LocationUtil.fromConfig(configurationSection.getConfigurationSection(section + ".spawn"));
             Set<LocationObject> flags = new HashSet<>();
             for (String flag : configurationSection.getConfigurationSection(section + ".flags").getKeys(false)) {
@@ -36,18 +36,18 @@ public class PaintWarsMap extends GameMap {
                 flags.add(object);
                 cords.add(Cord.fromLocation(object));
             }
-            paintMap.add(new PaintMap(flags, spawn));
+            teams.add(new TeamsMapData(flags, spawn));
         }
 
-        map.put("pwmap", paintMap);
+        map.put("teams", teams);
         map.put("cords", cords);
 
         return map;
     }
 
     @SuppressWarnings("unchecked")
-    public List<PaintMap> getMap() {
-        return ( List<PaintMap>) getSettings().get("pwmaps");
+    public List<TeamsMapData> getTeamsMapData() {
+        return ( List<TeamsMapData>) getSettings().get("teams");
     }
 
     @SuppressWarnings("unchecked")

@@ -11,12 +11,12 @@ import org.bukkit.entity.Player;
 import java.util.Set;
 import java.util.logging.Level;
 
-public class PaintMap {
+public class TeamsMapData {
     private LocationObject spawn;
     private Set<LocationObject> flags;
     private Player ifassigned;
 
-    public PaintMap(Set<LocationObject> flags, LocationObject spawn) {
+    public TeamsMapData(Set<LocationObject> flags, LocationObject spawn) {
         this.flags = flags;
         this.spawn = spawn;
     }

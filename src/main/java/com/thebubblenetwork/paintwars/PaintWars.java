@@ -89,6 +89,12 @@ public class PaintWars extends BubbleGameAPI {
     }
 
     public void teleportPlayers(GameMap gameMap, World world) {
+        if (!(gameMap instanceof PaintWarsMap)) {
+            throw new IllegalArgumentException("Invalid map");
+        }
+
+        PaintWarsMap map = (PaintWarsMap) gameMap;
+
 
     }
 
