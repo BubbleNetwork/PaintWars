@@ -1,0 +1,5 @@
+name: PaintWars
+version: 1
+main: com.thebubblenetwork.paintwars.PaintWars
+authors: [ExtendObject]
+priority: 80
