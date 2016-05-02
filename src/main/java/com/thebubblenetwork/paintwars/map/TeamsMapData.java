@@ -12,18 +12,21 @@ import java.util.Set;
 import java.util.logging.Level;
 
 public class TeamsMapData {
-    private LocationObject spawn;
-    private Set<LocationObject> flags;
+    private LocationObject blueTeamSpawn;
+    private LocationObject redTeamSpawn;
+    private Set<LocationObject> blueTeamFlags;
+    private Set<LocationObject> redTeamFlags;
+
     private Player ifassigned;
 
-    public TeamsMapData(Set<LocationObject> flags, LocationObject spawn) {
-        this.flags = flags;
-        this.spawn = spawn;
+
+    public TeamsMapData(LocationObject redTeamSpawn, LocationObject blueTeamSpawn, Set<LocationObject> redTeamFlags, Set<LocationObject> blueTeamFlags) {
+        this.redTeamSpawn = redTeamSpawn;
+        this.blueTeamSpawn = blueTeamSpawn;
+        this.redTeamFlags = redTeamFlags;
+        this.blueTeamFlags = blueTeamFlags;
     }
 
-    public LocationObject getSpawn() {
-        return spawn;
-    }
 
     public Player getIfassigned() {
         return ifassigned;
@@ -33,8 +36,18 @@ public class TeamsMapData {
         this.ifassigned = ifassigned;
     }
 
-    public Set<LocationObject> getFlags() {
-        return flags;
+    public Set<LocationObject> getBlueTeamFlags() { return blueTeamFlags; }
+
+    public Set<LocationObject> getRedTeamFlags() {
+        return redTeamFlags;
+    }
+
+    public LocationObject getBlueTeamSpawn() {
+        return blueTeamSpawn;
+    }
+
+    public LocationObject getRedTeamSpawn() {
+        return redTeamSpawn;
     }
 
     /*public void fillChests(World world, PregeneratedChest generation) {

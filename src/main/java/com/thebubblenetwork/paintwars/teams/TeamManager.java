@@ -13,6 +13,10 @@ public class TeamManager {
     private static List<String> redTeam = new ArrayList<>();
     private static List<String> blueTeam = new ArrayList<>();
 
+    public TeamManager() {
+
+    }
+
     public boolean isInTeam(Player player) {
         return redTeam.contains(player.getName()) || blueTeam.contains(player.getName());
     }

@@ -11,15 +11,17 @@ import com.thebubblenetwork.api.global.player.BubblePlayer;
 import com.thebubblenetwork.paintwars.kits.RifleKit;
 import com.thebubblenetwork.paintwars.listeners.PaintListener;
 import com.thebubblenetwork.paintwars.map.PaintWarsMap;
+import com.thebubblenetwork.paintwars.map.TeamsMapData;
 import com.thebubblenetwork.paintwars.scoreboard.PaintWarsBoard;
+import com.thebubblenetwork.paintwars.teams.TeamManager;
+import com.thebubblenetwork.paintwars.teams.TeamType;
 import lombok.Getter;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.logging.Level;
 
 
@@ -35,11 +37,18 @@ public class PaintWars extends BubbleGameAPI {
 
     private PaintListener listener = new PaintListener(this);
 
+    @Getter
+    private TeamManager teamManager;
+
     public PaintWars() {
         super("PaintWars", GameMode.SURVIVAL, "Rifle", 2);
         instance = this;
         board = new PaintWarsBoard();
         listener = new PaintListener(this);
+
+        //clear the teams
+        teamManager = new TeamManager();
+        teamManager.clearTeams();
     }
 
     public void cleanup() {
@@ -75,6 +84,8 @@ public class PaintWars extends BubbleGameAPI {
         else if (newstate == State.LOBBY) {
             if(oldstate == State.RESTARTING){
                 BubbleNetwork.getInstance().getLogger().log(Level.INFO, "PaintWars is currently restarting.");
+                //clear out the teams
+                teamManager.clearTeams();
             }
         }
 
@@ -94,7 +105,24 @@ public class PaintWars extends BubbleGameAPI {
         }
 
         PaintWarsMap map = (PaintWarsMap) gameMap;
+        Iterator<? extends Player> playerIterator = Bukkit.getOnlinePlayers().iterator();
+        for (TeamsMapData teamMapData : map.getTeamsMapData() ) {
+            if (playerIterator.hasNext()) {
+                Player p = playerIterator.next();
 
+                //set players spawn to their teams spawn
+                if (teamManager.getTeamType(p) == TeamType.RED) {
+
+                    p.teleport(teamMapData.getRedTeamSpawn().toLocation(world));
+
+                } else if (teamManager.getTeamType(p) == TeamType.BLUE){
+
+                    p.teleport(teamMapData.getBlueTeamSpawn().toLocation(world));
+
+                }
+
+            }
+        }
 
     }
 
