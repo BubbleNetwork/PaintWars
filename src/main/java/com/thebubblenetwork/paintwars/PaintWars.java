@@ -42,9 +42,6 @@ public class PaintWars extends BubbleGameAPI {
         board = new PaintWarsBoard();
         listener = new PaintListener(this);
 
-        //setup team manager
-        BubbleGameAPI.getInstance().setTeams(true);
-        BubbleGameAPI.getInstance().setupTeamManager();
     }
 
     public void cleanup() {
@@ -95,6 +92,7 @@ public class PaintWars extends BubbleGameAPI {
         return new PaintWarsMap(s, mapData, file, file1);
     }
 
+    @Override
     public void teleportPlayers(GameMap gameMap, World world) {
         if (!(gameMap instanceof PaintWarsMap)) {
             throw new IllegalArgumentException("Invalid map");
@@ -131,6 +129,10 @@ public class PaintWars extends BubbleGameAPI {
         super.onEnable();
         registerListener(getListener());
         KitManager.getKits().add(new RifleKit());
+
+        //setup team manager
+        BubbleGameAPI.getInstance().setTeams(true);
+        BubbleGameAPI.getInstance().setupTeamManager();
     }
 
 
