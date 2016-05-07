@@ -42,6 +42,9 @@ public class PaintWars extends BubbleGameAPI {
         board = new PaintWarsBoard();
         listener = new PaintListener(this);
 
+        //setup team manager
+        BubbleGameAPI.getInstance().setTeams(true);
+        BubbleGameAPI.getInstance().setupTeamManager();
     }
 
     public void cleanup() {
@@ -130,9 +133,6 @@ public class PaintWars extends BubbleGameAPI {
         registerListener(getListener());
         KitManager.getKits().add(new RifleKit());
 
-        //setup team manager
-        BubbleGameAPI.getInstance().setTeams(true);
-        BubbleGameAPI.getInstance().setupTeamManager();
     }
 
 
