@@ -13,8 +13,7 @@ import com.thebubblenetwork.paintwars.listeners.PaintListener;
 import com.thebubblenetwork.paintwars.map.PaintWarsMap;
 import com.thebubblenetwork.paintwars.map.TeamsMapData;
 import com.thebubblenetwork.paintwars.scoreboard.PaintWarsBoard;
-import com.thebubblenetwork.paintwars.teams.TeamManager;
-import com.thebubblenetwork.paintwars.teams.TeamType;
+import com.thebubblenetwork.api.game.teams.TeamType;
 import lombok.Getter;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -37,18 +36,15 @@ public class PaintWars extends BubbleGameAPI {
 
     private PaintListener listener = new PaintListener(this);
 
-    @Getter
-    private TeamManager teamManager;
-
     public PaintWars() {
         super("PaintWars", GameMode.SURVIVAL, "Rifle", 2);
         instance = this;
         board = new PaintWarsBoard();
         listener = new PaintListener(this);
 
-        //clear the teams
-        teamManager = new TeamManager();
-        teamManager.clearTeams();
+        //setup team manager
+        BubbleGameAPI.getInstance().setTeams(true);
+        BubbleGameAPI.getInstance().setupTeamManager();
     }
 
     public void cleanup() {
@@ -84,8 +80,8 @@ public class PaintWars extends BubbleGameAPI {
         else if (newstate == State.LOBBY) {
             if(oldstate == State.RESTARTING){
                 BubbleNetwork.getInstance().getLogger().log(Level.INFO, "PaintWars is currently restarting.");
-                //clear out the teams
-                teamManager.clearTeams();
+
+                BubbleGameAPI.getInstance().getTeamManager().clearTeams();
             }
         }
 
@@ -111,11 +107,11 @@ public class PaintWars extends BubbleGameAPI {
                 Player p = playerIterator.next();
 
                 //set players spawn to their teams spawn
-                if (teamManager.getTeamType(p) == TeamType.RED) {
+                if (BubbleGameAPI.getInstance().getTeamManager().getTeamType(p) == TeamType.RED) {
 
                     p.teleport(teamMapData.getRedTeamSpawn().toLocation(world));
 
-                } else if (teamManager.getTeamType(p) == TeamType.BLUE){
+                } else if (BubbleGameAPI.getInstance().getTeamManager().getTeamType(p) == TeamType.BLUE){
 
                     p.teleport(teamMapData.getBlueTeamSpawn().toLocation(world));
 
